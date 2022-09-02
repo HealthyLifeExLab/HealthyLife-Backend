@@ -13,4 +13,6 @@ public interface UserService {
     void deleteUser (Long id);
 
     boolean validateUser (String email, String password);
+
+    boolean validateEmail (String email);
 }
