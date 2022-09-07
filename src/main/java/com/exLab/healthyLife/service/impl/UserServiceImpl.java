@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String email) {
         User user = userRepository.findUserByEmailAndDeletedFalse(email)
-                .orElseThrow(() -> new NullResultException("There is no user with email " + email));
+                .orElseThrow(() -> new NullResultException("There is no such user"));
         return toDto(user);
     }
 

@@ -44,11 +44,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody UserDto userDto) {
-        if (userService.validateUser(userDto.getEmail(), userDto.getPassword())) {
-            UserDto loggedUser = userService.getUserByEmail(userDto.getEmail());
-            return new ResponseEntity<>(loggedUser.getId(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Wrong email or password", HttpStatus.BAD_REQUEST);
+        try {
+            if (userService.validateUser(userDto.getEmail(), userDto.getPassword())) {
+                UserDto loggedUser = userService.getUserByEmail(userDto.getEmail());
+                return new ResponseEntity<>(loggedUser.getId(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Wrong email or password", HttpStatus.BAD_REQUEST);
+            }
+        } catch (NullResultException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
